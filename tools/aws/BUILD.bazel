@@ -1,0 +1,12 @@
+sh_binary(
+    name = "login",
+    srcs = ["login.sh"],
+    data = [":awsconfig.ini"],
+    visibility = ["//visibility:public"],
+)
+
+sh_binary(
+    name = "logout",
+    srcs = ["logout.sh"],
+    visibility = ["//visibility:public"],
+)

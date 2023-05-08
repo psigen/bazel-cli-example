@@ -1,0 +1,61 @@
+sh_binary(
+    name = "ctlptl",
+    srcs = ["ctlptl.sh"],
+    data = [
+        "@com_github_helm_helm//:helm",
+        "@com_github_tilt-dev_ctlptl//:ctlptl",
+        "@io_k8s_kubectl//file:kubectl",
+        "@io_k8s_sigs_kind//file:kind",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "tilt",
+    srcs = ["tilt.sh"],
+    data = [
+        "@com_github_kubernetes-sigs_kustomize//:kustomize",
+        "@com_github_tilt-dev_tilt//:tilt",
+        "@io_k8s_kubectl//file:kubectl",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+sh_binary(
+    name = "k9s",
+    srcs = ["@com_github_derailed_k9s//:k9s"],
+)
+
+sh_binary(
+    name = "kind",
+    srcs = ["@io_k8s_sigs_kind//file:kind"],
+)
+
+sh_binary(
+    name = "kubectl",
+    srcs = ["@io_k8s_kubectl//file:kubectl"],
+)
+
+sh_binary(
+    name = "kustomize",
+    srcs = ["@com_github_kubernetes-sigs_kustomize//:kustomize"],
+)
+
+sh_binary(
+    name = "gcloud",
+    srcs = ["@com_google_gcloud//:bin/gcloud"],
+)
+
+sh_binary(
+    name = "grpcurl",
+    srcs = ["@com_github_fullstorydev_grpcurl//:grpcurl"],
+)
+
+sh_binary(
+    name = "helm",
+    srcs = ["@com_github_helm_helm//:helm"],
+)

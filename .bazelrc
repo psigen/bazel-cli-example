@@ -1,0 +1,7 @@
+# Configuration for running CLI tools transparently.
+# This suppresses unnecessary output from bazel's target checks.
+run:cli --ui_event_filters=-info,-stdout,-stderr
+run:cli --noshow_progress
+
+# See: https://docs.bazel.build/versions/master/best-practices.html#using-the-bazelrc-file
+try-import %workspace%/user.bazelrc

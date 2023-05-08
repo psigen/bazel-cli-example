@@ -1,0 +1,9 @@
+alias(
+    name = "login",
+    actual = "//tools/gcp:login",
+)
+
+alias(
+    name = "logout",
+    actual = "//tools/gcp:logout",
+)

@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# 'tools/bazel' is a script which overrides the resolved bazel executable.
+# We can use this to inject arbitrary additional functionality into the
+# bazel execution environment, like new subcommands, etc.
+#
+set -euo pipefail
+
+# Get the path to this script file.
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+
+# Override the use of Python2 for anything ever.
+export PYTHON2_BIN_PATH=xxxxxx
+export PYTHON2_LIB_PATH=xxxxxx
+
+# Create command aliases for a subset of commands.
+# This allows `bazel [foo]` to perform simple custom commands.
+cmd=$1
+case "$cmd" in
+    # These commands always run from the root of the repository.
+    tilt)
+        shift
+        cd "${SCRIPT_DIR}/.."
+        exec "$BAZEL_REAL" run --config=cli "//tools/cli:$cmd" -- $@
+        ;;
+    # These commands always run in the current working directory.
+    kubectl|k9s|ctlptl|helm|kind)
+        shift
+        exec "$BAZEL_REAL" run --config=cli "//tools/cli:$cmd" -- $@
+        ;;
+    # Login/logout is handled specially, because it requires suppressing some flags.
+    login|logout)
+        shift
+        exec "$BAZEL_REAL" run --config=cli --nogoogle_default_credentials "//tools/cli:$cmd" -- $@
+        ;;
+esac
+
+# Forward all commands to the real bazel executable.
+exec "$BAZEL_REAL" $@

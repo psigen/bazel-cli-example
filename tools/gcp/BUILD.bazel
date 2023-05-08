@@ -1,0 +1,11 @@
+sh_binary(
+    name = "login",
+    srcs = ["login.sh"],
+    visibility = ["//visibility:public"],
+)
+
+sh_binary(
+    name = "logout",
+    srcs = ["logout.sh"],
+    visibility = ["//visibility:public"],
+)
